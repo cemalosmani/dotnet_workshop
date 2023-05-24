@@ -61,3 +61,37 @@ class Child : Father
 //Classes inherit just a class, there is only one base class.
 //If i want to create a new Child object, it calls parents first(hierarchical) 
 //Example: Child c = new Child(); 1. Grandfather - 2. Father - 3. Child
+
+class Class1
+{
+    public Class1(int a)
+    {
+        
+    }
+
+    public Class1()
+    {
+
+    }
+}
+
+class Class2 : Class1
+{
+    public Class2() : base(5)
+    {
+        
+    }
+
+    public Class2(int a) : base(a)
+    {
+        
+    }
+}
+
+//It is an obligation that if ctor of parent class gets parameter, we have to use base keyword
+//to inherit args from base to derived class. If it has not get parameter or it already has noArgsCtor
+//it is not necessary to use base keyword.
+
+//What are the differences between this and base keyword?
+
+//'this' uses in the same class to switch between ctors, 'base' uses in derived classes to switch base class ctors
