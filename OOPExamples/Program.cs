@@ -1,4 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
+
+#region Examples
+
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.Serialization;
+
 Console.WriteLine("Hello, World!");
 Console.WriteLine(typeof(decimal).IsPrimitive);
 
@@ -6,6 +12,8 @@ Console.WriteLine(typeof(decimal).IsPrimitive);
 // int y = default(int);
 
 var child = new Child();
+Obje2 obje2 = new Obje2();
+obje2.Info();
 
 class MyClass
 {
@@ -95,3 +103,54 @@ class Class2 : Class1
 //What are the differences between this and base keyword?
 
 //'this' uses in the same class to switch between ctors, 'base' uses in derived classes to switch base class ctors
+
+
+#endregion
+
+class Obje
+{
+    public void Info()
+    {
+        Console.WriteLine("I'm an object");
+    }
+}
+
+class Obje2 : Obje
+{
+    
+}
+
+sealed class X
+{
+    public int sayi1 { get; set; }
+}
+
+class Y //: X => sealed keyword prevents inheritance
+{
+    public int sayi2 { get; set; }
+}
+
+class Z : Y
+{
+    public int sayi3 { get; set; }
+}
+
+#region partial classes
+
+partial class MyClass1
+{
+    public void A()
+    {
+        
+    }
+}
+
+partial class MyClass1
+{
+    public void B()
+    {
+        
+    }
+}
+
+#endregion
