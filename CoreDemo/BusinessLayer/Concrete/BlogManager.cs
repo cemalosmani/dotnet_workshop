@@ -19,17 +19,27 @@ namespace BusinessLayer.Concrete
         }
         public void AddBlog(Blog blog)
 		{
-			throw new NotImplementedException();
+			_blogDal.Insert(blog);
 		}
 
 		public void DeleteBlog(Blog blog)
 		{
-			throw new NotImplementedException();
+			_blogDal.Delete(blog);
 		}
 
 		public Blog GetById(int id)
 		{
 			throw new NotImplementedException();
+		}
+
+		public List<Blog> GetBlogById(int id)
+		{
+			return _blogDal.GetListAll(x => x.BlogId == id);
+		}
+
+		public List<Blog> GetBlogListWithCategory()
+		{
+			return _blogDal.GetListWithCategory();
 		}
 
 		public List<Blog> GetList()
@@ -39,7 +49,7 @@ namespace BusinessLayer.Concrete
 
 		public void UpdateBlog(Blog blog)
 		{
-			throw new NotImplementedException();
+			_blogDal.Update(blog);
 		}
 	}
 }
