@@ -22,6 +22,7 @@ namespace DataAccessLayer.Concrete
         public DbSet<Category> Categories { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<BlogRating> BlogRatings { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<NewsLetter> NewsLetters { get; set; }
     }
