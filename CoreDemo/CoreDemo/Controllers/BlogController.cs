@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.Concrete.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
@@ -12,6 +13,7 @@ namespace CoreDemo.Controllers
 	{
 		BlogManager bm = new BlogManager(new EfBlogRepository());
 		CategoryManager cm = new CategoryManager(new EfCategoryRepository());
+		Context c = new Context();
 		public IActionResult Index()
 		{
 			var values = bm.GetBlogListWithCategory();
@@ -27,7 +29,9 @@ namespace CoreDemo.Controllers
 
 		public IActionResult BlogListByAuthor()
 		{
-			var values = bm.GetListWithCategoryWithAuthor(1);
+			var userMail = User.Identity.Name;
+			var authorId = c.Authors.Where(x => x.AuthorMail == userMail).Select(y=>y.AuthorId).FirstOrDefault();
+			var values = bm.GetListWithCategoryWithAuthor(authorId);
 			return View(values);
 		}
 		
@@ -46,14 +50,15 @@ namespace CoreDemo.Controllers
 		[HttpPost]
 		public IActionResult AddBlog(Blog b)
 		{
-			
 			BlogValidator bv = new BlogValidator();
 			ValidationResult results = bv.Validate(b);
+			var userMail = User.Identity.Name;
+			var authorId = c.Authors.Where(x => x.AuthorMail == userMail).Select(y=>y.AuthorId).FirstOrDefault();
 			if (results.IsValid)
 			{
 				b.BlogStatus = true;
 				b.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
-				b.AuthorId = 1;
+				b.AuthorId = authorId;
 				bm.AddT(b);
 				return RedirectToAction("BlogListByAuthor","Blog");
 			}
@@ -92,7 +97,9 @@ namespace CoreDemo.Controllers
 		[HttpPost]
 		public IActionResult EditBlog(Blog blog)
 		{
-			blog.AuthorId = 1;
+			var userMail = User.Identity.Name;
+			var authorId = c.Authors.Where(x => x.AuthorMail == userMail).Select(y=>y.AuthorId).FirstOrDefault();
+			blog.AuthorId = authorId;
 			blog.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
 			blog.BlogStatus = true;
 			bm.UpdateT(blog);

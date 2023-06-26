@@ -16,6 +16,21 @@ namespace DataAccessLayer.Concrete
                 "Encrypt=false;TrustServerCertificate=True;" +
                 "User Id=sa;Password=mZ0*Q&r2$8uF");
         }
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Message>()
+                .HasOne(x => x.SenderUser)
+                .WithMany(y => y.AuthorSender)
+                .HasForeignKey(z => z.MessageSenderId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+            
+            modelBuilder.Entity<Message>()
+                .HasOne(x => x.ReceiverUser)
+                .WithMany(y => y.AuthorReceiver)
+                .HasForeignKey(z => z.MessageReceiverId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+        }
 
         public DbSet<About> Abouts { get; set; }
         public DbSet<Blog> Blogs { get; set; }
@@ -25,5 +40,7 @@ namespace DataAccessLayer.Concrete
         public DbSet<BlogRating> BlogRatings { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<NewsLetter> NewsLetters { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Message> Messages { get; set; }
     }
 }
