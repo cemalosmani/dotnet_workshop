@@ -1,0 +1,19 @@
+@using EntityLayer.Concrete
+@model List<Language>
+
+<section class="resume-section" id="languages">
+    <div class="resume-section-content">
+        <h2 class="mb-5">Languages</h2>
+        @foreach (var item in Model)
+        {
+            <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                <div class="flex-grow-1">
+                    <div class="subheading mb-3">@item.LanguageName</div>
+                    <p>Writing: @item.LanguageWriting</p>
+                    <p>Reading: @item.LanguageReading</p>
+                    <p>Speaking: @item.LanguageSpeaking</p>
+                </div>
+            </div>
+        }
+    </div>
+</section>
