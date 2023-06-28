@@ -1,0 +1,35 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element">
+                        <span class="block m-t-xs font-bold">
+                            <a href="/Admin/Dashboard/Index"><img src="~/assets/dejkoveci.svg" alt="logo" width="50"></a>
+                            </span>
+                    </div>
+                    <div class="logo-element">
+                        <a href="/Admin/Dashboard/Index"><img src="~/assets/dejkoveci.svg" alt="logo" width="30"></a>
+                    </div>
+                </li>
+                <li class="@((ViewBag.ActivePage == "Profile") ? "active" : "")">
+                    <a href="/Admin/Profile/Index"><i class="fa fa-vcard"></i><span class="nav-label">Profile</span></a>
+                </li>
+                <li class="@((ViewBag.ActivePage == "Experience") ? "active" : "")">
+                    <a href="/Admin/Experience/Index"><i class="fa fa-black-tie"></i><span class="nav-label">Experience</span></a>
+                </li>
+                <li class="@((ViewBag.ActivePage == "Education") ? "active" : "")">
+                    <a href="/Admin/Education/Index"><i class="fa fa-university"></i><span class="nav-label">Education</span></a>
+                </li>
+                <li class="@((ViewBag.ActivePage == "Skills") ? "active" : "")">
+                    <a href="/Admin/Skill/Index"><i class="fa fa-code"></i><span class="nav-label">Skills</span></a>
+                </li>
+                <li class="@((ViewBag.ActivePage == "Languages") ? "active" : "")">
+                    <a href="/Admin/Language/Index"><i class="fa fa-flag"></i><span class="nav-label">Languages</span></a>
+                </li>
+                <li class="@((ViewBag.ActivePage == "Contacts") ? "active" : "")">
+                    <a href="/Admin/Contact/Index"><i class="fa fa-chain"></i><span class="nav-label">Contacts</span></a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>

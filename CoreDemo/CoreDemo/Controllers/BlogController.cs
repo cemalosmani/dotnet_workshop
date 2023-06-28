@@ -50,10 +50,10 @@ namespace CoreDemo.Controllers
 		[HttpPost]
 		public IActionResult AddBlog(Blog b)
 		{
-			BlogValidator bv = new BlogValidator();
-			ValidationResult results = bv.Validate(b);
 			var userMail = User.Identity.Name;
 			var authorId = c.Authors.Where(x => x.AuthorMail == userMail).Select(y=>y.AuthorId).FirstOrDefault();
+			BlogValidator bv = new BlogValidator();
+			ValidationResult results = bv.Validate(b);
 			if (results.IsValid)
 			{
 				b.BlogStatus = true;

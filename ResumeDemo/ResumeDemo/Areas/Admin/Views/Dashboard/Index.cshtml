@@ -1,0 +1,29 @@
+@model EntityLayer.Concrete.Admin
+
+@{
+    ViewBag.Title = "ResumeDemo - Dashboard";
+    Layout = "DashboardLayout";
+}
+<h2>Welcome to the Dashboard</h2>
+<br/>
+        <div class="row m-b-lg m-t-lg">
+                        <div class="col-md-12">
+        
+                            <div class="profile-image">
+                                <img src="/assets/@Model.AdminImage" class="rounded-circle circle-border m-b-md h-300 w-300 m-r-xl" alt="profile">
+                            </div>
+                            <div class="profile-info m-l-xl p-lg">
+                                <div class="m-l-xl p-xl">
+                                    <div class="m-l-xl p-xl">
+                                        <h2>
+                                            @Model.AdminFullName
+                                        </h2>
+                                        <h4>Software Developer</h4>
+                                        <small>
+                                            @Model.AdminAbout
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        </div>

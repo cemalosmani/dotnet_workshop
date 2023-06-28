@@ -1,0 +1,16 @@
+@model EntityLayer.Concrete.Admin
+
+<section class="resume-section" id="about">
+    <div class="resume-section-content">
+
+        <h1 class="mb-0">
+            @Model.AdminFullName
+        </h1>
+        <div class="subheading mb-5">
+            <a href="mailto:@Model.AdminMail">@Model.AdminMail</a>
+        </div>
+        <p class="lead mb-5">@Model.AdminAbout</p>
+        
+        @await Component.InvokeAsync("ShowContact")
+    </div>
+</section>

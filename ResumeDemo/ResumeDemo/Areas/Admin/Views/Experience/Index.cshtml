@@ -1,0 +1,33 @@
+@using EntityLayer.Concrete
+@model List<Experience>
+@{
+    ViewBag.Title = "title";
+    Layout = "DashboardLayout";
+}
+
+<h2>Experiences</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Title</th>
+        <th>Place</th>
+        <th>Details</th>
+        <th>Date</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th>@item.ExperienceId</th>
+            <td>@item.ExperienceTitle</td>
+            <td>@item.ExperiencePlace</td>
+            <td>@item.ExperienceDetails</td>
+            <td>@item.ExperienceDate</td>
+            <td><a href="/Admin/Experience/EditExperience/@item.ExperienceId" class="btn btn-danger">Edit</a></td>
+            <td><a href="/Admin/Experience/DeleteExperience/@item.ExperienceId" class="btn btn-warning">Delete</a></td>
+        </tr>
+    }
+</table>
+<a href="/Admin/Experience/AddExperience" class="btn btn-primary">Add Experience</a>

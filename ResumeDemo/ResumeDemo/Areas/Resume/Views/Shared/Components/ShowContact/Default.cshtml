@@ -1,0 +1,10 @@
+@using EntityLayer.Concrete
+@model List<Contact>
+
+<div class="social-icons">
+    @foreach (var item in Model)
+    {
+        <a class="social-icon" href="@item.ContactLink"><i class="fab fa-@item.ContactType"></i></a>
+    }
+    
+</div>

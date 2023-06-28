@@ -1,0 +1,33 @@
+@using EntityLayer.Concrete
+@model List<Language>
+@{
+    ViewBag.Title = "ResumeDemo - Languages";
+    Layout = "DashboardLayout";
+}
+
+<h2>Languages</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Writing</th>
+        <th>Reading</th>
+        <th>Speaking</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th>@item.LanguageId</th>
+            <td>@item.LanguageName</td>
+            <td>@item.LanguageWriting</td>
+            <td>@item.LanguageReading</td>
+            <td>@item.LanguageSpeaking</td>
+            <td><a href="/Admin/Language/EditLanguage/@item.LanguageId" class="btn btn-danger">Edit</a></td>
+            <td><a href="/Admin/Language/DeleteLanguage/@item.LanguageId" class="btn btn-warning">Delete</a></td>
+        </tr>
+    }
+</table>
+<a href="/Admin/Language/AddLanguage" class="btn btn-primary">Add Language</a>

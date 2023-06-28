@@ -1,0 +1,29 @@
+@model EntityLayer.Concrete.Language
+
+@{
+    ViewBag.Title = "ResumeDemo - Edit Language";
+    Layout = "DashboardLayout";
+}
+
+<h2>Edit Language</h2>
+<br/>
+@using (Html.BeginForm("EditLanguage", "Language", FormMethod.Post))
+{
+    @Html.Label("Name")
+    @Html.TextBoxFor(x => x.LanguageName, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.LanguageName)
+    <br/>
+    @Html.Label("Writing")
+    @Html.TextBoxFor(x => x.LanguageWriting, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.LanguageWriting)
+    <br/>
+    @Html.Label("Reading")
+    @Html.TextBoxFor(x => x.LanguageReading, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.LanguageReading)
+    <br/>
+    @Html.Label("Speaking")
+    @Html.TextBoxFor(x => x.LanguageSpeaking, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.LanguageSpeaking)
+    <br/>
+    <button class="btn btn-info">Update</button>
+}

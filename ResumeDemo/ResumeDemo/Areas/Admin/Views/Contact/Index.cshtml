@@ -1,0 +1,29 @@
+@using EntityLayer.Concrete
+@model List<Contact>
+@{
+    ViewBag.Title = "ResumeDemo - Contacts";
+    Layout = "DashboardLayout";
+}
+
+<h2>Contacts</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Type</th>
+        <th>Link</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th>@item.ContactId</th>
+            <td>@item.ContactType</td>
+            <td>@item.ContactLink</td>
+            <td><a href="/Admin/Contact/EditContact/@item.ContactId" class="btn btn-warning">Edit</a></td>
+            <td><a href="/Admin/Contact/DeleteContact/@item.ContactId" class="btn btn-danger">Delete</a></td>
+        </tr>
+    }
+</table>
+<a href="/Admin/Contact/AddContact" class="btn btn-primary">Add Contact</a>

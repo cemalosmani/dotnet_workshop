@@ -1,0 +1,21 @@
+@model EntityLayer.Concrete.Contact
+
+@{
+    ViewBag.Title = "ResumeDemo - Add Contact";
+    Layout = "DashboardLayout";
+}
+
+<h2>Add New Contact</h2>
+<br/>
+@using (Html.BeginForm("AddContact", "Contact", FormMethod.Post))
+{
+    @Html.Label("Type")
+    @Html.TextBoxFor(x => x.ContactType, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.ContactType)
+    <br/>
+    @Html.Label("Link")
+    @Html.TextBoxFor(x => x.ContactLink, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.ContactLink)
+    <br/>
+    <button class="btn btn-info">Save</button>
+}

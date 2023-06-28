@@ -1,0 +1,35 @@
+@using EntityLayer.Concrete
+@model List<Education>
+@{
+    ViewBag.Title = "title";
+    Layout = "DashboardLayout";
+}
+
+<h2>Educations</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Place</th>
+        <th>Title</th>
+        <th>Details</th>
+        <th>Mark</th>
+        <th>Date</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th>@item.EducationId</th>
+            <td>@item.EducationPlace</td>
+            <td>@item.EducationTitle</td>
+            <td>@item.EducationDetails</td>
+            <td>@item.EducationMark</td>
+            <td>@item.EducationDate</td>
+            <td><a href="/Admin/Education/EditEducation/@item.EducationId" class="btn btn-danger">Edit</a></td>
+            <td><a href="/Admin/Education/DeleteEducation/@item.EducationId" class="btn btn-warning">Delete</a></td>
+        </tr>
+    }
+</table>
+<a href="/Admin/Education/AddEducation" class="btn btn-primary">Add Education</a>

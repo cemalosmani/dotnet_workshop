@@ -1,0 +1,33 @@
+@model EntityLayer.Concrete.Education
+
+@{
+    ViewBag.Title = "ResumeDemo - Edit Education";
+    Layout = "DashboardLayout";
+}
+
+<h2>Edit Education</h2>
+<br/>
+@using (Html.BeginForm("EditEducation", "Education", FormMethod.Post))
+{
+    @Html.Label("Place")
+    @Html.TextBoxFor(x => x.EducationPlace, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.EducationPlace)
+    <br/>
+    @Html.Label("Title")
+    @Html.TextBoxFor(x => x.EducationTitle, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.EducationTitle)
+    <br/>
+    @Html.Label("Details")
+    @Html.TextBoxFor(x => x.EducationDetails, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.EducationDetails)
+    <br/>
+    @Html.Label("Mark")
+    @Html.TextBoxFor(x => x.EducationMark, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.EducationMark)
+    <br/>
+    @Html.Label("Date")
+    @Html.TextBoxFor(x => x.EducationDate, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.EducationDate)
+    <br/>
+    <button class="btn btn-info">Update</button>
+}

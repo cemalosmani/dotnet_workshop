@@ -1,0 +1,29 @@
+@model EntityLayer.Concrete.Experience
+
+@{
+    ViewBag.Title = "ResumeDemo - Add Experience";
+    Layout = "DashboardLayout";
+}
+
+<h2>Add New Experience</h2>
+<br/>
+@using (Html.BeginForm("AddExperience", "Experience", FormMethod.Post))
+{
+    @Html.Label("Title")
+    @Html.TextBoxFor(x => x.ExperienceTitle, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.ExperienceTitle)
+    <br/>
+    @Html.Label("Place")
+    @Html.TextBoxFor(x => x.ExperiencePlace, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.ExperiencePlace)
+    <br/>
+    @Html.Label("Details")
+    @Html.TextBoxFor(x => x.ExperienceDetails, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.ExperienceDetails)
+    <br/>
+    @Html.Label("Date")
+    @Html.TextBoxFor(x => x.ExperienceDate, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.ExperienceDate)
+    <br/>
+    <button class="btn btn-info">Save</button>
+}
