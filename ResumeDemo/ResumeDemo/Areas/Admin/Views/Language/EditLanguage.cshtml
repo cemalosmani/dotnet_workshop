@@ -9,6 +9,8 @@
 <br/>
 @using (Html.BeginForm("EditLanguage", "Language", FormMethod.Post))
 {
+    @Html.HiddenFor(x => x.LanguageId, new { @class = "form-control" })
+    
     @Html.Label("Name")
     @Html.TextBoxFor(x => x.LanguageName, new { @class = "form-control" })
     @Html.ValidationMessageFor(x=>x.LanguageName)

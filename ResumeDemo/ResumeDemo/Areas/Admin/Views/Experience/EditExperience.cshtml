@@ -9,6 +9,8 @@
 <br/>
 @using (Html.BeginForm("EditExperience", "Experience", FormMethod.Post))
 {
+    @Html.HiddenFor(x => x.ExperienceId, new { @class = "form-control" })
+    
     @Html.Label("Title")
     @Html.TextBoxFor(x => x.ExperienceTitle, new { @class = "form-control" })
     @Html.ValidationMessageFor(x=>x.ExperienceTitle)
@@ -18,7 +20,7 @@
     @Html.ValidationMessageFor(x=>x.ExperiencePlace)
     <br/>
     @Html.Label("Details")
-    @Html.TextBoxFor(x => x.ExperienceDetails, new { @class = "form-control" })
+    @Html.TextAreaFor(x => x.ExperienceDetails,10,3, new { @class = "form-control" })
     @Html.ValidationMessageFor(x=>x.ExperienceDetails)
     <br/>
     @Html.Label("Date")

@@ -1,5 +1,7 @@
+using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.Concrete.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
@@ -10,11 +12,17 @@ namespace ResumeDemo.Areas.Admin.Controllers;
 [Area("Admin")]
 public class EducationController : Controller
 {
-    private EducationManager edm = new EducationManager(new EFEducationRepository());
-    
+    private readonly IEducationService _educationService;
+    private readonly Context _context;
+    public EducationController(IEducationService educationService, Context context)
+    {
+        _educationService = educationService;
+        _context = context;
+    }
+
     public IActionResult Index()
     {
-        var values = edm.GetList();
+        var values = _educationService.GetList();
         ViewBag.ActivePage = "Education";
         return View(values);
     }
@@ -28,12 +36,15 @@ public class EducationController : Controller
     [HttpPost]
     public IActionResult AddEducation(Education e)
     {
+        var userMail = User.Identity.Name;
+        var adminId = _context.Admins.Where(x => x.AdminMail == userMail).Select(y => y.AdminId).FirstOrDefault();
         EducationValidator av = new EducationValidator();
         ValidationResult results = av.Validate(e);
         if (results.IsValid)
         {
             e.EducationStatus = true;
-            edm.AddT(e);
+            e.AdminId = adminId;
+            _educationService.AddT(e);
             return RedirectToAction("Index");
         }
         else
@@ -49,19 +60,22 @@ public class EducationController : Controller
     [HttpGet]
     public IActionResult EditEducation(int id)
     {
-        var values = edm.GetById(id);
+        var values = _educationService.GetById(id);
         return View(values);
     }
     
     [HttpPost]
     public IActionResult EditEducation(Education e)
     {
+        var userMail = User.Identity.Name;
+        var adminId = _context.Admins.Where(x => x.AdminMail == userMail).Select(y => y.AdminId).FirstOrDefault();
         EducationValidator av = new EducationValidator();
         ValidationResult results = av.Validate(e);
         if (results.IsValid)
         {
             e.EducationStatus = true;
-            edm.UpdateT(e);
+            e.AdminId = adminId;
+            _educationService.UpdateT(e);
             return RedirectToAction("Index","Education");
         }
         else
@@ -76,8 +90,8 @@ public class EducationController : Controller
     
     public IActionResult DeleteEducation(int id)
     {
-        var value = edm.GetById(id);
-        edm.DeleteT(value);
+        var value = _educationService.GetById(id);
+        _educationService.DeleteT(value);
         return RedirectToAction("Index","Education");
     }
 }

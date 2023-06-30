@@ -1,5 +1,7 @@
+using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.Concrete.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
@@ -10,11 +12,17 @@ namespace ResumeDemo.Areas.Admin.Controllers;
 [Area("Admin")]
 public class LanguageController : Controller
 {
-    LanguageManager lm = new LanguageManager(new EFLanguageRepository());
-    
+    private readonly ILanguageService _languageService;
+    private readonly Context _context;
+    public LanguageController(ILanguageService languageService, Context context)
+    {
+        _languageService = languageService;
+        _context = context;
+    }
+
     public IActionResult Index()
     {
-        var values = lm.GetList();
+        var values = _languageService.GetList();
         ViewBag.ActivePage = "Languages";
         return View(values);
     }
@@ -28,12 +36,15 @@ public class LanguageController : Controller
     [HttpPost]
     public IActionResult AddLanguage(Language l)
     {
+        var userMail = User.Identity.Name;
+        var adminId = _context.Admins.Where(x => x.AdminMail == userMail).Select(y => y.AdminId).FirstOrDefault();
         LanguageValidator av = new LanguageValidator();
         ValidationResult results = av.Validate(l);
         if (results.IsValid)
         {
             l.LanguageStatus = true;
-            lm.AddT(l);
+            l.AdminId = adminId;
+            _languageService.AddT(l);
             return RedirectToAction("Index","Language");
         }
         else
@@ -49,19 +60,22 @@ public class LanguageController : Controller
     [HttpGet]
     public IActionResult EditLanguage(int id)
     {
-        var values = lm.GetById(id);
+        var values = _languageService.GetById(id);
         return View(values);
     }
     
     [HttpPost]
     public IActionResult EditLanguage(Language l)
     {
+        var userMail = User.Identity.Name;
+        var adminId = _context.Admins.Where(x => x.AdminMail == userMail).Select(y => y.AdminId).FirstOrDefault();
         LanguageValidator av = new LanguageValidator();
         ValidationResult results = av.Validate(l);
         if (results.IsValid)
         {
             l.LanguageStatus = true;
-            lm.UpdateT(l);
+            l.AdminId = adminId;
+            _languageService.UpdateT(l);
             return RedirectToAction("Index","Language");
         }
         else
@@ -76,8 +90,8 @@ public class LanguageController : Controller
     
     public IActionResult DeleteLanguage(int id)
     {
-        var value = lm.GetById(id);
-        lm.DeleteT(value);
+        var value = _languageService.GetById(id);
+        _languageService.DeleteT(value);
         return RedirectToAction("Index","Language");
     }
 }

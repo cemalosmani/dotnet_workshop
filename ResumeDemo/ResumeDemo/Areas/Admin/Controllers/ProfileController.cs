@@ -1,3 +1,4 @@
+using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
 using DataAccessLayer.Concrete;
@@ -11,13 +12,19 @@ namespace ResumeDemo.Areas.Admin.Controllers;
 [Area("Admin")]
 public class ProfileController : Controller
 {
-    AdminManager adm = new AdminManager(new EFAdminRepository());
-    Context c = new Context();
-    
+    private readonly IAdminService _adminService;
+    private readonly Context _context;
+
+    public ProfileController(IAdminService adminService, Context context)
+    {
+        _adminService = adminService;
+        _context = context;
+    }
+
     [HttpGet]
     public IActionResult Index()
     {
-        var values = adm.GetById(1);
+        var values = _adminService.GetById(1);
         ViewBag.ActivePage = "Profile";
         return View(values);
     }
@@ -26,7 +33,7 @@ public class ProfileController : Controller
     public IActionResult Index(AdminProfilePicture a)
     {
         var userMail = User.Identity.Name;
-        var admin = c.Admins.FirstOrDefault(x => x.AdminMail == userMail);
+        var admin = _context.Admins.FirstOrDefault(x => x.AdminMail == userMail);
         AdminValidator av = new AdminValidator();
         ValidationResult results = av.Validate(a);
         if (results.IsValid)
@@ -61,7 +68,7 @@ public class ProfileController : Controller
                 admin.AdminPassword = a.AdminPassword;
                 admin.AdminStatus = true;
 
-                adm.UpdateT(admin);
+                _adminService.UpdateT(admin);
             }
 
             return RedirectToAction("Index", "Dashboard");
@@ -77,7 +84,7 @@ public class ProfileController : Controller
     }
     public IActionResult RemoveProfilePhoto()
     {
-        var admin = c.Admins.FirstOrDefault();
+        var admin = _context.Admins.FirstOrDefault();
         if (admin != null)
         {
             if (admin.AdminImage != "defaultpp.png")
@@ -88,7 +95,7 @@ public class ProfileController : Controller
                     System.IO.File.Delete(imagePath);
                 }
                 admin.AdminImage = "defaultpp.png";
-                c.SaveChanges();
+                _context.SaveChanges();
             }
         }
         return RedirectToAction("Index","Profile");

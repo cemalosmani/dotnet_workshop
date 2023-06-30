@@ -9,6 +9,9 @@
 <br/>
 @using (Html.BeginForm("EditEducation", "Education", FormMethod.Post))
 {
+    
+    @Html.HiddenFor(x => x.EducationId, new { @class = "form-control" })
+    
     @Html.Label("Place")
     @Html.TextBoxFor(x => x.EducationPlace, new { @class = "form-control" })
     @Html.ValidationMessageFor(x=>x.EducationPlace)

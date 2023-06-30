@@ -1,3 +1,4 @@
+using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
 using DataAccessLayer.Concrete.EntityFramework;
 using Microsoft.AspNetCore.Authentication;
@@ -8,10 +9,16 @@ namespace ResumeDemo.Areas.Admin.Controllers;
 [Area("Admin")]
 public class DashboardController : Controller
 {
-    AdminManager adm = new AdminManager(new EFAdminRepository());
+    private readonly IAdminService _adminService;
+
+    public DashboardController(IAdminService adminService)
+    {
+        _adminService = adminService;
+    }
+
     public IActionResult Index()
     {
-        var values = adm.GetById(1);
+        var values = _adminService.GetById(1);
         ViewBag.ActivePage = "";
         return View(values);
     }

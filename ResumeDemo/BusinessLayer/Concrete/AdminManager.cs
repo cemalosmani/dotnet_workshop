@@ -6,7 +6,7 @@ namespace BusinessLayer.Concrete;
 
 public class AdminManager : IAdminService
 {
-    IAdminDal _adminDal;
+    private readonly IAdminDal _adminDal;
 
     public AdminManager(IAdminDal adminDal)
     {
