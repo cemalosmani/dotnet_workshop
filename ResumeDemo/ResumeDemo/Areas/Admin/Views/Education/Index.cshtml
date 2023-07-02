@@ -1,5 +1,5 @@
 @using EntityLayer.Concrete
-@model List<Education>
+@model List<DTOLayer.DTOs.EducationDTO>
 @{
     ViewBag.Title = "title";
     Layout = "DashboardLayout";
@@ -27,8 +27,8 @@
             <td>@item.EducationDetails</td>
             <td>@item.EducationMark</td>
             <td>@item.EducationDate</td>
-            <td><a href="/Admin/Education/EditEducation/@item.EducationId" class="btn btn-danger">Edit</a></td>
-            <td><a href="/Admin/Education/DeleteEducation/@item.EducationId" class="btn btn-warning">Delete</a></td>
+            <td><a href="/Admin/Education/EditEducation/@item.EducationId" class="btn btn-warning">Edit</a></td>
+            <td><a href="/Admin/Education/DeleteEducation/@item.EducationId" class="btn btn-danger">Delete</a></td>
         </tr>
     }
 </table>

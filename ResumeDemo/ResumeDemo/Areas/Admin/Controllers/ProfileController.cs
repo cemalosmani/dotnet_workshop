@@ -1,8 +1,10 @@
+using AutoMapper;
 using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.Concrete.EntityFramework;
+using DTOLayer.DTOs;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using ResumeDemo.Areas.Admin.Models;
@@ -13,24 +15,28 @@ namespace ResumeDemo.Areas.Admin.Controllers;
 public class ProfileController : Controller
 {
     private readonly IAdminService _adminService;
+    private readonly IMapper _mapper;
     private readonly Context _context;
 
-    public ProfileController(IAdminService adminService, Context context)
+    public ProfileController(IAdminService adminService, Context context, IMapper mapper)
     {
         _adminService = adminService;
         _context = context;
+        _mapper = mapper;
     }
 
     [HttpGet]
     public IActionResult Index()
     {
-        var values = _adminService.GetById(1);
+        var userMail = User.Identity.Name;
+        var adminId = _context.Admins.Where(x => x.AdminMail == userMail).Select(y=>y.AdminId).FirstOrDefault();
+        var values = _mapper.Map<AdminDTO>(_adminService.GetById(adminId));
         ViewBag.ActivePage = "Profile";
         return View(values);
     }
     
     [HttpPost]
-    public IActionResult Index(AdminProfilePicture a)
+    public IActionResult Index(AdminProfilePictureDTO a)
     {
         var userMail = User.Identity.Name;
         var admin = _context.Admins.FirstOrDefault(x => x.AdminMail == userMail);
@@ -61,14 +67,20 @@ public class ProfileController : Controller
 
                     admin.AdminImage = newImageName;
                 }
-                
-                admin.AdminMail = a.AdminMail;
-                admin.AdminFullName = a.AdminFullName;
-                admin.AdminAbout = a.AdminAbout;
-                admin.AdminPassword = a.AdminPassword;
-                admin.AdminStatus = true;
 
-                _adminService.UpdateT(admin);
+                a.AdminId = admin.AdminId;
+                a.AdminStatus = true;
+
+                _adminService.UpdateT(new EntityLayer.Concrete.Admin()
+                {
+                    AdminId = a.AdminId,
+                    AdminImage = admin.AdminImage,
+                    AdminMail = a.AdminMail,
+                    AdminFullName = a.AdminFullName,
+                    AdminAbout = a.AdminAbout,
+                    AdminPassword = a.AdminPassword,
+                    AdminStatus = a.AdminStatus
+                });
             }
 
             return RedirectToAction("Index", "Dashboard");

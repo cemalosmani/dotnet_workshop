@@ -1,9 +1,10 @@
+using DTOLayer.DTOs;
 using EntityLayer.Concrete;
 using FluentValidation;
 
 namespace BusinessLayer.ValidationRules;
 
-public class AdminValidator : AbstractValidator<Admin>
+public class AdminValidator : AbstractValidator<AdminDTO>
 {
     public AdminValidator()
     {

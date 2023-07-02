@@ -1,9 +1,10 @@
+using DTOLayer.DTOs;
 using EntityLayer.Concrete;
 using FluentValidation;
 
 namespace BusinessLayer.ValidationRules;
 
-public class LanguageValidator : AbstractValidator<Language>
+public class LanguageValidator : AbstractValidator<LanguageDTO>
 {
     public LanguageValidator()
     {

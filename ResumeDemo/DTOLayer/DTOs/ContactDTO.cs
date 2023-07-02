@@ -1,15 +1,12 @@
-using System.ComponentModel.DataAnnotations;
+namespace DTOLayer.DTOs;
 
-namespace EntityLayer.Concrete;
-
-public class Contact
+public class ContactDTO
 {
-    [Key]
     public int ContactId { get; set; }
     public string ContactType { get; set; }
     public string ContactLink { get; set; }
     public bool ContactStatus { get; set; }
 
     public int AdminId { get; set; }
-    public Admin Admin { get; set; }
+    public AdminDTO AdminDTO { get; set; }
 }

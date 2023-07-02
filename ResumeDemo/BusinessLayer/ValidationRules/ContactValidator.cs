@@ -1,9 +1,10 @@
+using DTOLayer.DTOs;
 using EntityLayer.Concrete;
 using FluentValidation;
 
 namespace BusinessLayer.ValidationRules;
 
-public class ContactValidator : AbstractValidator<Contact>
+public class ContactValidator : AbstractValidator<ContactDTO>
 {
     public ContactValidator()
     {

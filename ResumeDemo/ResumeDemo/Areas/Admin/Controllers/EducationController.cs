@@ -1,8 +1,8 @@
+using AutoMapper;
 using BusinessLayer.Abstract;
-using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
 using DataAccessLayer.Concrete;
-using DataAccessLayer.Concrete.EntityFramework;
+using DTOLayer.DTOs;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
@@ -14,15 +14,17 @@ public class EducationController : Controller
 {
     private readonly IEducationService _educationService;
     private readonly Context _context;
-    public EducationController(IEducationService educationService, Context context)
+    private readonly IMapper _mapper;
+    public EducationController(IEducationService educationService, Context context, IMapper mapper)
     {
         _educationService = educationService;
         _context = context;
+        _mapper = mapper;
     }
 
     public IActionResult Index()
     {
-        var values = _educationService.GetList();
+        var values = _mapper.Map<List<EducationDTO>>(_educationService.GetList());
         ViewBag.ActivePage = "Education";
         return View(values);
     }
@@ -34,17 +36,27 @@ public class EducationController : Controller
     }
     
     [HttpPost]
-    public IActionResult AddEducation(Education e)
+    public IActionResult AddEducation(EducationDTO e)
     {
         var userMail = User.Identity.Name;
         var adminId = _context.Admins.Where(x => x.AdminMail == userMail).Select(y => y.AdminId).FirstOrDefault();
-        EducationValidator av = new EducationValidator();
+        EducationValidator av = new();
         ValidationResult results = av.Validate(e);
         if (results.IsValid)
         {
             e.EducationStatus = true;
             e.AdminId = adminId;
-            _educationService.AddT(e);
+            _educationService.AddT(new Education()
+            {
+                EducationId = e.EducationId,
+                EducationPlace = e.EducationPlace,
+                EducationTitle = e.EducationTitle,
+                EducationDetails = e.EducationDetails,
+                EducationMark = e.EducationMark,
+                EducationDate = e.EducationDate,
+                EducationStatus = e.EducationStatus,
+                AdminId = e.AdminId
+            });
             return RedirectToAction("Index");
         }
         else
@@ -60,22 +72,32 @@ public class EducationController : Controller
     [HttpGet]
     public IActionResult EditEducation(int id)
     {
-        var values = _educationService.GetById(id);
+        var values = _mapper.Map<EducationDTO>(_educationService.GetById(id));
         return View(values);
     }
     
     [HttpPost]
-    public IActionResult EditEducation(Education e)
+    public IActionResult EditEducation(EducationDTO e)
     {
         var userMail = User.Identity.Name;
         var adminId = _context.Admins.Where(x => x.AdminMail == userMail).Select(y => y.AdminId).FirstOrDefault();
-        EducationValidator av = new EducationValidator();
+        EducationValidator av = new();
         ValidationResult results = av.Validate(e);
         if (results.IsValid)
         {
             e.EducationStatus = true;
             e.AdminId = adminId;
-            _educationService.UpdateT(e);
+            _educationService.UpdateT(new Education()
+            {
+                EducationId = e.EducationId,
+                EducationPlace = e.EducationPlace,
+                EducationTitle = e.EducationTitle,
+                EducationDetails = e.EducationDetails,
+                EducationMark = e.EducationMark,
+                EducationDate = e.EducationDate,
+                EducationStatus = e.EducationStatus,
+                AdminId = e.AdminId
+            });
             return RedirectToAction("Index","Education");
         }
         else

@@ -1,9 +1,10 @@
+using DTOLayer.DTOs;
 using EntityLayer.Concrete;
 using FluentValidation;
 
 namespace BusinessLayer.ValidationRules;
 
-public class ExperienceValidator : AbstractValidator<Experience>
+public class ExperienceValidator : AbstractValidator<ExperienceDTO>
 {
     public ExperienceValidator()
     {

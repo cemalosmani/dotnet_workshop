@@ -1,5 +1,5 @@
 @using EntityLayer.Concrete
-@model List<Skill>
+@model List<DTOLayer.DTOs.SkillDTO>
 @{
     ViewBag.Title = "ResumeDemo - Skills";
     Layout = "DashboardLayout";
@@ -19,8 +19,8 @@
         <tr>
             <th>@item.SkillId</th>
             <td>@item.SkillName</td>
-            <td><a href="/Admin/Skill/EditSkill/@item.SkillId" class="btn btn-danger">Edit</a></td>
-            <td><a href="/Admin/Skill/DeleteSkill/@item.SkillId" class="btn btn-warning">Delete</a></td>
+            <td><a href="/Admin/Skill/EditSkill/@item.SkillId" class="btn btn-warning">Edit</a></td>
+            <td><a href="/Admin/Skill/DeleteSkill/@item.SkillId" class="btn btn-danger">Delete</a></td>
         </tr>
     }
 </table>

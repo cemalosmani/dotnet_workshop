@@ -1,5 +1,5 @@
 @using EntityLayer.Concrete
-@model List<Language>
+@model List<DTOLayer.DTOs.LanguageDTO>
 @{
     ViewBag.Title = "ResumeDemo - Languages";
     Layout = "DashboardLayout";
@@ -25,8 +25,8 @@
             <td>@item.LanguageWriting</td>
             <td>@item.LanguageReading</td>
             <td>@item.LanguageSpeaking</td>
-            <td><a href="/Admin/Language/EditLanguage/@item.LanguageId" class="btn btn-danger">Edit</a></td>
-            <td><a href="/Admin/Language/DeleteLanguage/@item.LanguageId" class="btn btn-warning">Delete</a></td>
+            <td><a href="/Admin/Language/EditLanguage/@item.LanguageId" class="btn btn-warning">Edit</a></td>
+            <td><a href="/Admin/Language/DeleteLanguage/@item.LanguageId" class="btn btn-danger">Delete</a></td>
         </tr>
     }
 </table>

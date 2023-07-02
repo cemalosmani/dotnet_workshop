@@ -1,8 +1,10 @@
+using AutoMapper;
 using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.Concrete.EntityFramework;
+using DTOLayer.DTOs;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
@@ -13,16 +15,18 @@ namespace ResumeDemo.Areas.Admin.Controllers;
 public class LanguageController : Controller
 {
     private readonly ILanguageService _languageService;
+    private readonly IMapper _mapper;
     private readonly Context _context;
-    public LanguageController(ILanguageService languageService, Context context)
+    public LanguageController(ILanguageService languageService, Context context, IMapper mapper)
     {
         _languageService = languageService;
         _context = context;
+        _mapper = mapper;
     }
 
     public IActionResult Index()
     {
-        var values = _languageService.GetList();
+        var values = _mapper.Map<List<LanguageDTO>>(_languageService.GetList());
         ViewBag.ActivePage = "Languages";
         return View(values);
     }
@@ -34,17 +38,26 @@ public class LanguageController : Controller
     }
     
     [HttpPost]
-    public IActionResult AddLanguage(Language l)
+    public IActionResult AddLanguage(LanguageDTO l)
     {
         var userMail = User.Identity.Name;
         var adminId = _context.Admins.Where(x => x.AdminMail == userMail).Select(y => y.AdminId).FirstOrDefault();
-        LanguageValidator av = new LanguageValidator();
+        LanguageValidator av = new();
         ValidationResult results = av.Validate(l);
         if (results.IsValid)
         {
             l.LanguageStatus = true;
             l.AdminId = adminId;
-            _languageService.AddT(l);
+            _languageService.AddT(new Language()
+            {
+                LanguageId = l.LanguageId,
+                LanguageName = l.LanguageName,
+                LanguageReading = l.LanguageReading,
+                LanguageSpeaking = l.LanguageSpeaking,
+                LanguageWriting = l.LanguageWriting,
+                LanguageStatus = l.LanguageStatus,
+                AdminId = l.AdminId
+            });
             return RedirectToAction("Index","Language");
         }
         else
@@ -60,22 +73,31 @@ public class LanguageController : Controller
     [HttpGet]
     public IActionResult EditLanguage(int id)
     {
-        var values = _languageService.GetById(id);
+        var values = _mapper.Map<LanguageDTO>(_languageService.GetById(id));
         return View(values);
     }
     
     [HttpPost]
-    public IActionResult EditLanguage(Language l)
+    public IActionResult EditLanguage(LanguageDTO l)
     {
         var userMail = User.Identity.Name;
         var adminId = _context.Admins.Where(x => x.AdminMail == userMail).Select(y => y.AdminId).FirstOrDefault();
-        LanguageValidator av = new LanguageValidator();
+        LanguageValidator av = new();
         ValidationResult results = av.Validate(l);
         if (results.IsValid)
         {
             l.LanguageStatus = true;
             l.AdminId = adminId;
-            _languageService.UpdateT(l);
+            _languageService.UpdateT(new Language()
+            {
+                LanguageId = l.LanguageId,
+                LanguageName = l.LanguageName,
+                LanguageReading = l.LanguageReading,
+                LanguageSpeaking = l.LanguageSpeaking,
+                LanguageWriting = l.LanguageWriting,
+                LanguageStatus = l.LanguageStatus,
+                AdminId = l.AdminId
+            });
             return RedirectToAction("Index","Language");
         }
         else

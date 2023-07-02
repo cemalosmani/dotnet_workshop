@@ -1,9 +1,10 @@
+using DTOLayer.DTOs;
 using EntityLayer.Concrete;
 using FluentValidation;
 
 namespace BusinessLayer.ValidationRules;
 
-public class SkillValidator : AbstractValidator<Skill>
+public class SkillValidator : AbstractValidator<SkillDTO>
 {
     public SkillValidator()
     {

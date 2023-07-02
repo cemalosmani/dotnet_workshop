@@ -1,5 +1,5 @@
 @using EntityLayer.Concrete
-@model List<Experience>
+@model List<DTOLayer.DTOs.ExperienceDTO>
 @{
     ViewBag.Title = "title";
     Layout = "DashboardLayout";
@@ -25,8 +25,8 @@
             <td>@item.ExperiencePlace</td>
             <td>@item.ExperienceDetails</td>
             <td>@item.ExperienceDate</td>
-            <td><a href="/Admin/Experience/EditExperience/@item.ExperienceId" class="btn btn-danger">Edit</a></td>
-            <td><a href="/Admin/Experience/DeleteExperience/@item.ExperienceId" class="btn btn-warning">Delete</a></td>
+            <td><a href="/Admin/Experience/EditExperience/@item.ExperienceId" class="btn btn-warning">Edit</a></td>
+            <td><a href="/Admin/Experience/DeleteExperience/@item.ExperienceId" class="btn btn-danger">Delete</a></td>
         </tr>
     }
 </table>
