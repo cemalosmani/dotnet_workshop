@@ -5,7 +5,7 @@
 
 <div class="container-fluid p-0">
     <!-- About-->
-    @await Component.InvokeAsync("ShowAdmin")
+     @await Component.InvokeAsync("ShowAdmin") 
     <hr class="m-0" />
     <!-- Experience-->
     @await Component.InvokeAsync("ShowExperience")
@@ -15,6 +15,9 @@
     <hr class="m-0" />
     <!-- Skills-->
     @await Component.InvokeAsync("ShowSkill")
+    <hr class="m-0" />
+    <!-- Projects-->
+    @await Component.InvokeAsync("ShowProject")
     <hr class="m-0" />
     <!-- Languages-->
     @await Component.InvokeAsync("ShowLanguage")

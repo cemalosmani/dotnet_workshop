@@ -1,0 +1,28 @@
+@model DTOLayer.DTOs.ProjectDTO
+
+@{
+    ViewBag.Title = "ResumeDemo - Edit Project";
+    Layout = "DashboardLayout";
+}
+
+<h2>Edit Project</h2>
+<br/>
+@using (Html.BeginForm("EditProject", "Project", FormMethod.Post))
+{
+    @Html.HiddenFor(x=>x.ProjectId)
+    
+    @Html.Label("Place")
+    @Html.TextBoxFor(x => x.ProjectName, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.ProjectName)
+    <br/>
+    @Html.Label("Title")
+    @Html.TextBoxFor(x => x.ProjectDetails, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.ProjectDetails)
+    <br/>
+    @Html.Label("Date")
+    @Html.TextBoxFor(x => x.ProjectDate, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.ProjectDate)
+    <br/>
+    
+    <button class="btn btn-info">Update</button>
+}

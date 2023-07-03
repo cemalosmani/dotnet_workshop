@@ -1,13 +1,10 @@
 using AutoMapper;
 using BusinessLayer.Abstract;
-using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
 using DataAccessLayer.Concrete;
-using DataAccessLayer.Concrete.EntityFramework;
 using DTOLayer.DTOs;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
-using ResumeDemo.Areas.Admin.Models;
 
 namespace ResumeDemo.Areas.Admin.Controllers;
 

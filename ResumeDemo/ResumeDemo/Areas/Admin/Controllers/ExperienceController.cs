@@ -1,9 +1,7 @@
 using AutoMapper;
 using BusinessLayer.Abstract;
-using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
 using DataAccessLayer.Concrete;
-using DataAccessLayer.Concrete.EntityFramework;
 using DTOLayer.DTOs;
 using EntityLayer.Concrete;
 using FluentValidation.Results;

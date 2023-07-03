@@ -27,5 +27,8 @@ public static class Extensions
         
         services.AddScoped<ISkillService, SkillManager>();
         services.AddScoped<ISkillDal, EFSkillRepository>();
+
+        services.AddScoped<IProjectService, ProjectManager>();
+        services.AddScoped<IProjectDal, EFProjectRepository>();
     }
 }

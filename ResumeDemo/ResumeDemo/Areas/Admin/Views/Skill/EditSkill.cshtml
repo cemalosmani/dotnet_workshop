@@ -7,7 +7,7 @@
 
 <h2>Edit Skill</h2>
 <br/>
-@using (Html.BeginForm("AddSkill", "Skill", FormMethod.Post))
+@using (Html.BeginForm("EditSkill", "Skill", FormMethod.Post))
 {
     @Html.HiddenFor(x => x.SkillId, new { @class = "form-control" })
     

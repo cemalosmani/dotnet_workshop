@@ -19,4 +19,5 @@ public class Admin
     public ICollection<Language> Languages { get; set; }
     public ICollection<Skill> Skills { get; set; }
     public ICollection<Contact> Contacts { get; set; }
+    public ICollection<Project> Projects { get; set; }
 }

@@ -1,0 +1,30 @@
+@model List<DTOLayer.DTOs.ProjectDTO>
+@{
+    ViewBag.Title = "ResumeDemo - Projects";
+    Layout = "DashboardLayout";
+}
+
+<h2>Projects</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Details</th>
+        <th>Date</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th>@item.ProjectId</th>
+            <td>@item.ProjectName</td>
+            <td>@item.ProjectDetails</td>
+            <td>@item.ProjectDate</td>
+            <td><a href="/Admin/Project/EditProject/@item.ProjectId" class="btn btn-warning">Edit</a></td>
+            <td><a href="/Admin/Project/DeleteProject/@item.ProjectId" class="btn btn-danger">Delete</a></td>
+        </tr>
+    }
+</table>
+<a href="/Admin/Project/AddProject" class="btn btn-primary">Add Project</a>

@@ -1,16 +1,26 @@
+using AutoMapper;
+using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
 using DataAccessLayer.Concrete.EntityFramework;
+using DTOLayer.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ResumeDemo.Areas.Resume.ViewComponents.Skill;
 
 public class ShowSkill : ViewComponent
 {
-    SkillManager sm = new SkillManager(new EFSkillRepository());
+    private readonly ISkillService _skillService;
+    private readonly IMapper _mapper;
+
+    public ShowSkill(IMapper mapper, ISkillService skillService)
+    {
+        _mapper = mapper;
+        _skillService = skillService;
+    }
 
     public IViewComponentResult Invoke()
     {
-        var values = sm.GetList();
+        var values = _mapper.Map<List<SkillDTO>>(_skillService.GetList());
         return View(values);
     }
 }

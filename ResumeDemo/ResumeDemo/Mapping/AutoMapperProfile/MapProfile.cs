@@ -25,5 +25,8 @@ public class MapProfile : Profile
         
         CreateMap<Skill, SkillDTO>();
         CreateMap<SkillDTO, Skill>();
+        
+        CreateMap<Project, ProjectDTO>();
+        CreateMap<ProjectDTO, Project>();
     }
 }
