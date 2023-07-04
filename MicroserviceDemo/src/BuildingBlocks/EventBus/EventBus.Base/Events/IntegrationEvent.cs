@@ -1,27 +1,26 @@
-using System;
 using Newtonsoft.Json;
 
-namespace EventBus.Base.Events
-{
-    public class IntegrationEvent
-    {
-        [JsonProperty]
-        public Guid Id { get; set; }
-        [JsonProperty]
-        public DateTime CreatedDate { get; set; }
+namespace EventBus.Base.Events;
 
-        
-        public IntegrationEvent()
-        {
-            Id = Guid.NewGuid();
-            CreatedDate = DateTime.Now;
-        }
-        
-        [System.Text.Json.Serialization.JsonConstructor]
-        public IntegrationEvent(DateTime createdDate, Guid id)
-        {
-            CreatedDate = createdDate;
-            Id = id;
-        }
+public class IntegrationEvent
+{
+    [JsonProperty]
+    public Guid Id { get; private set; }
+
+    [JsonProperty]
+    public DateTime CreatedDate { get; private set; }
+
+
+    public IntegrationEvent()
+    {
+        Id = Guid.NewGuid();
+        CreatedDate = DateTime.Now;
+    }
+
+    [JsonConstructor]
+    public IntegrationEvent(Guid id, DateTime createdDate)
+    {
+        Id = id;
+        CreatedDate = createdDate;
     }
 }

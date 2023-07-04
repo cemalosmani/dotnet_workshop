@@ -1,23 +1,23 @@
+using System.Net.Sockets;
 using Polly;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Exceptions;
-using System;
-using System.Net.Sockets;
 
-namespace EventBus.RabbitMQ
-{
-    public class RabbitMQPersistentConnection : IDisposable
+
+namespace EventBus.RabbitMQ;
+
+public class RabbitMQPersistentConnection : IDisposable
     {
+        private readonly IConnectionFactory _connectionFactory;
+        private readonly int retryCount;
         private IConnection connection;
-        private readonly IConnectionFactory ConnectionFactory;
         private object lock_object = new object();
-        private readonly int RetryCount;
         private bool _disposed;
 
         public RabbitMQPersistentConnection(IConnectionFactory connectionFactory, int retryCount = 5)
         {
-            ConnectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
-            RetryCount = retryCount;    
+            _connectionFactory = connectionFactory;
+            this.retryCount = retryCount;
         }
 
         public bool IsConnected => connection != null && connection.IsOpen;
@@ -30,7 +30,7 @@ namespace EventBus.RabbitMQ
         public void Dispose()
         {
             _disposed = true;
-            connection?.Dispose();
+            connection.Dispose();
         }
 
         public bool TryConnect()
@@ -38,23 +38,24 @@ namespace EventBus.RabbitMQ
             lock (lock_object)
             {
                 var policy = Policy.Handle<SocketException>()
-                    .Or<BrokerUnreachableException>()
-                    .WaitAndRetry(RetryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
-                     {
+                                    .Or<BrokerUnreachableException>()
+                                    .WaitAndRetry(retryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
+                                    {
 
-                     }
-                );
+                                    });
 
                 policy.Execute(() =>
                 {
-                    connection = ConnectionFactory.CreateConnection();
-                    connection.CallbackException += Connection_CallbackException;
-                    connection.ConnectionBlocked += Connection_ConnectionBlocked;
+                    connection = _connectionFactory.CreateConnection();
                 });
 
                 if (IsConnected)
                 {
                     connection.ConnectionShutdown += Connection_ConnectionShutdown;
+                    connection.ConnectionBlocked += Connection_ConnectionBlocked;
+                    connection.CallbackException += Connection_CallbackException;
+                    // log
+
                     return true;
                 }
 
@@ -62,25 +63,26 @@ namespace EventBus.RabbitMQ
             }
         }
 
-        private void Connection_ConnectionBlocked(object sender, global::RabbitMQ.Client.Events.ConnectionBlockedEventArgs e)
+        private void Connection_CallbackException(object sender, global::RabbitMQ.Client.Events.CallbackExceptionEventArgs e)
         {
-            if (!_disposed) return;
+            if (_disposed) return;
 
             TryConnect();
         }
 
-        private void Connection_CallbackException(object sender, global::RabbitMQ.Client.Events.CallbackExceptionEventArgs e)
+        private void Connection_ConnectionBlocked(object sender, global::RabbitMQ.Client.Events.ConnectionBlockedEventArgs e)
         {
-            if (!_disposed) return;
+            if (_disposed) return;
 
             TryConnect();
         }
 
         private void Connection_ConnectionShutdown(object sender, ShutdownEventArgs e)
         {
-            if (!_disposed) return;
+
+            //log Connection_ConnectionShutdown
+            if (_disposed) return;
 
             TryConnect();
         }
     }
-}
