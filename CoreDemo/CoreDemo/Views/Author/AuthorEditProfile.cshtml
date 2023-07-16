@@ -1,0 +1,51 @@
+@model EntityLayer.Concrete.Author
+
+@{
+    ViewBag.Title = "title";
+    Layout = "AuthorLayout";
+}
+
+@using (Html.BeginForm("AuthorEditProfile", "Author", FormMethod.Post))
+{
+    <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Profilim</h4>
+                    <p class="card-description"> Profil Bilgilerini Düzenle </p>
+                    <br/>
+                    @Html.HiddenFor(x => x.AuthorId, new {@class = "form-control"})
+                    <form class="forms-sample">
+                      <div class="form-group">
+                        <label for="exampleInputName1">Adı-Soyadı</label>
+                        @Html.TextBoxFor(x => x.AuthorName, new {@class = "form-control"})
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputEmail3">E-Posta Adresi</label>
+                        @Html.TextBoxFor(x => x.AuthorMail, new {@class = "form-control"})
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword4">Şifre</label>
+                        @Html.PasswordFor(x => x.AuthorPassword, new {@class = "form-control"})
+                      </div>
+                      
+                      <div class="form-group">
+                        <label>Profil Fotoğrafı</label>
+                        <input type="file" name="img[]" class="file-upload-default">
+                        <div class="input-group col-xs-12">
+                          <input type="text" class="form-control file-upload-info" disabled placeholder="Fotoğraf Yükle">
+                          <span class="input-group-append">
+                            <button class="file-upload-browse btn btn-gradient-primary" type="button">Yükle</button>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleTextarea1">Hakkında</label>
+                        @Html.TextAreaFor(x => x.AuthorAbout,10,3, new {@class = "form-control"})
+                      </div>
+                      <button type="submit" class="btn btn-gradient-primary mr-2">Güncelle</button>
+                      <button class="btn btn-light">Vazgeç</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+}
