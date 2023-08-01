@@ -20,7 +20,7 @@
         <tr>
             <th>@item.ProjectId</th>
             <td>@item.ProjectName</td>
-            <td>@item.ProjectDetails</td>
+            <td>@item.@Html.Raw(item.ProjectDetails.Replace("\n", "<br>"))</td>
             <td>@item.ProjectDate</td>
             <td><a href="/Admin/Project/EditProject/@item.ProjectId" class="btn btn-warning">Edit</a></td>
             <td><a href="/Admin/Project/DeleteProject/@item.ProjectId" class="btn btn-danger">Delete</a></td>

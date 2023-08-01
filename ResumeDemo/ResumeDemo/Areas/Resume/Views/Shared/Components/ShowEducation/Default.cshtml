@@ -8,7 +8,7 @@
                 <div class="flex-grow-1">
                     <h3 class="mb-0">@item.EducationPlace</h3>
                     <div class="subheading mb-3">@item.EducationTitle</div>
-                    <div>@item.EducationDetails</div>
+                    <div>@Html.Raw(item.EducationDetails.Replace("\n", "<br>"))</div>
                     <p>GPA: @item.EducationMark</p>
                 </div>
                 <div class="flex-shrink-0"><span class="text-primary">@item.EducationDate</span></div>

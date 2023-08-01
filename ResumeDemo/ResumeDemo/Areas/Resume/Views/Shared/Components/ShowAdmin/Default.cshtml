@@ -9,7 +9,7 @@
         <div class="subheading mb-5">
             <a href="mailto:@Model.AdminMail">@Model.AdminMail</a>
         </div>
-        <p class="lead mb-5">@Model.AdminAbout</p>
+        <p class="lead mb-5">@Html.Raw(Model.AdminAbout.Replace("\n", "<br>"))</p>
         
         @await Component.InvokeAsync("ShowContact")
     </div>

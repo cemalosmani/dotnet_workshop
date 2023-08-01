@@ -20,7 +20,7 @@
                                         </h2>
                                         <h4>Software Developer</h4>
                                         <small>
-                                            @Model.AdminAbout
+                                            @Html.Raw(Model.AdminAbout.Replace("\n", "<br>"))
                                         </small>
                                     </div>
                                 </div>

@@ -23,7 +23,7 @@
             <th>@item.EducationId</th>
             <td>@item.EducationPlace</td>
             <td>@item.EducationTitle</td>
-            <td>@item.EducationDetails</td>
+            <td>@Html.Raw(item.EducationDetails.Replace("\n", "<br>"))</td>
             <td>@item.EducationMark</td>
             <td>@item.EducationDate</td>
             <td><a href="/Admin/Education/EditEducation/@item.EducationId" class="btn btn-warning">Edit</a></td>

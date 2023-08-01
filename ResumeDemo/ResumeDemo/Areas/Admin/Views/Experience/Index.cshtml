@@ -22,7 +22,7 @@
             <th>@item.ExperienceId</th>
             <td>@item.ExperienceTitle</td>
             <td>@item.ExperiencePlace</td>
-            <td>@item.ExperienceDetails</td>
+            <td>@Html.Raw(item.ExperienceDetails.Replace("\n", "<br>"))</td>
             <td>@item.ExperienceDate</td>
             <td><a href="/Admin/Experience/EditExperience/@item.ExperienceId" class="btn btn-warning">Edit</a></td>
             <td><a href="/Admin/Experience/DeleteExperience/@item.ExperienceId" class="btn btn-danger">Delete</a></td>
